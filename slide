@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{margin:0px; padding:0px;}
+        body{
+            margin-top: 5em;
+            
+        }
+        .container{
+            position: relative;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid purple;
+            overflow: hidden;
+        }
+
+        .slider-container{
+            position: absolute;
+            width: 100%;
+        }
+
+        .slide {
+            position: absolute;
+            width: 100%;
+            padding: 0 10%;
+            box-sizing: border-box;
+            top:50%;
+            transform: translateY(-50%);
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .slider-container.animated{
+            transition: left .3s ease-in;
+        }
+
+        #prev,
+        #next {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateY(-50%);
+            z-index: 999999;
+            display:inline-block;
+            height: 5em;
+            width: 5em;
+            border-radius: 50%;
+            background-position: center center;
+            background-repeat: no-repeat;
+            transition: all .3s ease-in;
+        }
+
+        #prev.disabled, #next.disabled {display:none;}
+        #prev {background: yellow; margin-left: -480px;}
+        #prev:hover, #next:hover{background:blue;}
+
+        #next {background: yellow; margin-left: 380px;}
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <ul class="slider-container simple-list" id="slider">
+            <li class="slide">Presently a breeze sprang up; Stubb feigned to cast off from the whale; hoisting his boats, the Frenchman soon increased his distance, while the Pequod slid in between him and Stubb's whale. Whereupon Stubb quickly pulled to the floating body, and hailing the Pequod to give notice of his intentions, at once proceeded to reap the fruit of his unrighteous cunning. Seizing his sharp boat-spade, he commenced an excavation in the body, a little behind the side fin. You would almost have thought he was digging a cellar there in the sea; and when at length his spade struck against the gaunt ribs, it was like turning up old Roman tiles and pottery buried in fat English loam. His boat's crew were all in high excitement, eagerly helping their chief, and looking as anxious as gold-hunters.</li>
+            <li class="slide">And all the time numberless fowls were diving, and ducking, and screaming, and yelling, and fighting around them. Stubb was beginning to look disappointed, especially as the horrible nosegay increased, when suddenly from out the very heart of this plague, there stole a faint stream of perfume, which flowed through the tide of bad smells without being absorbed by it, as one river will flow into and then along with another, without at all blending with it for a time.</li>
+            <li class="slide">"I have it, I have it," cried Stubb, with delight, striking something in the subterranean regions, "a purse! a purse!"</li>
+            <li class="slide">Dropping his spade, he thrust both hands in, and drew out handfuls of something that looked like ripe Windsor soap, or rich mottled old cheese; very unctuous and savory withal. You might easily dent it with your thumb; it is of a hue between yellow and ash colour. And this, good friends, is ambergris, worth a gold guinea an ounce to any druggist. Some six handfuls were obtained; but more was unavoidably lost in the sea, and still more, perhaps, might have been secured were it not for impatient Ahab's loud command to Stubb to desist, and come on board, else the ship would bid them good.</li>
+            <li class="slide">Now this ambergris is a very curious substance, and so important as an article of commerce, that in 1791 a certain Nantucket-born Captain Coffin was examined at the bar of the English House of Commons on that subject. For at that time, and indeed until a comparatively late day, the precise origin of ambergris remained, like amber itself, a problem to the learned. Though the word ambergris is but the French compound for grey amber, yet the two substances are quite distinct. For amber, though at times found on the sea-coast, is also dug up in some far inland soils, whereas ambergris is never found except upon the sea. Besides, amber is a hard, transparent, brittle, odorless substance, used for mouth-pieces to pipes, for beads and ornaments; but ambergris is soft, waxy, and so highly fragrant and spicy, that it is largely used in perfumery, in pastiles, precious candles, hair-powders, and pomatum. The Turks use it in cooking, and also carry it to Mecca, for the same purpose that frankincense is carried to St. Peter's in Rome. Some wine merchants drop a few grains into claret, to flavor it.</li>
+            <li class="slide">Who would think, then, that such fine ladies and gentlemen should regale themselves with an essence found in the inglorious bowels of a sick whale! Yet so it is. By some, ambergris is supposed to be the cause, and by others the effect, of the dyspepsia in the whale. How to cure such a dyspepsia it were hard to say, unless by administering three or four boat loads of Brandreth's pills, and then running out of harm's way, as laborers do in blasting rocks.</li>
+        </ul>
+        <a href="#" id="prev"></a>
+        <a href="#" id="next"></a>
+    </div>
+
+    <script>
+        // 변수 지정
+        var sliderWrapper = document.getElementsByClassName('container'),// 클래스명 container
+            sliderContainer = document.getElementsByClassName('slider-container'),//클래스명 slider-container
+            slides = document.getElementsByClassName('slide'),//클래스명 slide
+            slideCount = slides.length,//슬라이드 개수
+            currenIndex = 0, // 시작점
+            topHeight = 0, // slide중 가장 큰 높이
+            navPrev = document.getElementById('prev'), // ID prev
+            navNext = document.getElementById('next'); // ID next
+
+            
+        //슬라이드의 높이 확인하여 부모의 높이를 지정
+
+        function slideHeight(){
+
+            for(var i = 0; i < slideCount; i++){
+                if(slides[i].offsetHeight > topHeight){ //slides의 높이가 현재 topHight보다 크다면
+                    topHeight = slides[i].offsetHeight; //slides의 높이를 topHeight에 대입
+                }
+
+                console.log(topHeight);
+            }
+
+            sliderWrapper[0].style.height = topHeight + 'px';
+            sliderContainer[0].style.height = topHeight + 'px';
+        };
+
+        slideHeight();
+
+        //슬라이드가 있으면 가로로 배열
+            for(var i = 0; i < slideCount; i++){
+                slides[i].style.left = i*100 + '%'; //absolute가 되어있어 모든 slide가 겹쳐 있기 때문에 i*100%씩 밀기
+            }
+
+        //슬라이드 이동 함수
+        function goToSlide(idx){ // idx에 들어올 숫자가 있어야 하므로 대입
+            sliderContainer[0].style.left = idx * - 100 +'%'; 
+            sliderContainer[0].classList.add('animated');
+            currenIndex = idx;
+
+            //updateNav(); // 첫번째, 마지막 슬라이드 방향키 제거
+        }
+
+        /*function updateNav(){
+            if(currenIndex == 0){ // 첫번째 슬라이드라면
+                navPrev.classList.add('disabled'); //disabled 추가
+            }else{
+                navPrev.classList.remove('disabled'); //disabled 삭제
+            }
+
+            if(currenIndex == slideCount - 1){ // 마지막 슬라이드라면
+                navNext.classList.add('disabled'); //disabled 추가
+            }else{
+                navNext.classList.remove('disabled'); //disabled 삭제
+            }
+        };*/
+
+        //버튼기능 업데이트 함수
+        navPrev.addEventListener('click',function(ev){
+            ev.preventDefault();
+            if(currenIndex != 0){ // 처음이 아니라면
+                goToSlide(currenIndex - 1); // 다음 슬라이드로
+            }else{
+                goToSlide(slideCount - 1); // 마지막 슬라이드로
+            }
+        });
+
+        navNext.addEventListener('click',function(ev){
+            ev.preventDefault();
+            
+            if(currenIndex != slideCount - 1){ // 마지막이 아니라면
+                goToSlide(currenIndex + 1); // 이전 슬라이드로
+            }else{
+                goToSlide(0); // 첫번째 슬라이드로
+            }
+        });
+
+        //첫번째 슬라이드 먼저 보이도록 설정
+        goToSlide(0);
+    </script>
+</body>
+</html>
