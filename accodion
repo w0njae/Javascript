@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html, body {
+                font-family: Helvetica, Arial, sans-serif;
+                margin: 0;
+                background-color: #f0f0f0;
+                }
+
+                .container {
+                width: 90%;
+                margin: 0 auto;
+                }
+
+                .panel-question {
+                margin-bottom: 20px;
+                background-color: #fff;
+                }
+
+                .panel-heading {
+                font-weight: bold;
+                padding: 5px;
+                background-color: #333;
+                color: #fff;
+                cursor: pointer;
+                }
+
+                .panel-body {
+                padding: 15px;
+                }
+
+                #btn-collapse {
+                margin-bottom: 10px;
+                background-color: #999;
+                border: none;
+                color: #fff;
+                cursor: pointer;
+                padding: 5px;
+                float: right;
+                }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button id="btn-collapse">Collapse All</button>
+        <h2>FAQ</h2>
+        <section id="faq">
+          <div class="panel-question active">
+            <div class="panel-heading">
+              + Lorem ipsum dolor sit?
+            </div>
+            <div class="panel-body" id="thisone">
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad aliquid voluptate fugit quaerat non molestiae quo magni soluta minima corporis! Soluta, ipsa et.</p>
+              <p>Quos quibusdam, nesciunt totam ullam quasi neque!</p>
+            </div>
+          </div>
+          
+          <div class="panel-question">
+            <div class="panel-heading">
+              + Lorem ipsum dolor sit?
+            </div>
+            <div class="panel-body">
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad aliquid voluptate fugit quaerat non molestiae quo magni soluta minima corporis! Soluta, ipsa et.</p>
+              <p>Quos quibusdam, nesciunt totam ullam quasi neque!</p>
+            </div>
+          </div>
+          
+          <div class="panel-question">
+            <div class="panel-heading">
+              + Lorem ipsum dolor sit?
+            </div>
+            <div class="panel-body">
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad aliquid voluptate fugit quaerat non molestiae quo magni soluta minima corporis! Soluta, ipsa et.</p>
+              <p>Quos quibusdam, nesciunt totam ullam quasi neque!</p>
+            </div>
+          </div>
+        </section>
+      </div>
+      <script>
+        var btnCollapse = document.getElementById('btn-collapse'), // 전체 숨기는 버튼
+            heading = document.getElementsByClassName('panel-heading'), // 클릭 할 heading
+            question = document.getElementsByClassName('panel-question'), // active class 넣을 question
+            answer = document.getElementsByClassName('panel-body'); // 펼쳐지는 body
+
+            // 제목을 클릭하면 할일
+        for(var i = 0; i < heading.length; i++){
+            heading[i].addEventListener('click',function(ev){
+
+                //active 지우기
+                for(var j = 0; j < question.length; j++){ //question 마다 할일
+                    question[j].classList.remove('active');
+                    ev.target.parentNode.classList.add('active'); // target = 클릭된것 , parentNode = 의 부모Node
+                    activeBody();
+                }
+            });
+        }
+
+        function activeBody(){
+            //panel-body 모두 안보이도록answer , display:none;
+            for(var k = 0; k < answer.length; k++){
+                answer[k].style.display = 'none';
+            }
+
+            //클래스명 active가 있는 panel-question 자식 중 panel-body가 나타나게
+            //.panel-question.active .panel-body
+            var activePanel = document.querySelector('.panel-question.active .panel-body');
+            activePanel.style.display = 'block';
+        }
+        activeBody(); // 첫 화면 실행
+
+        //collapse all 버튼을 클릭하면 모든 answer 안보이도록한다.
+        btnCollapse.addEventListener('click',function(){
+            for(var x = 0; x < answer.length; x++){
+                answer[x].style.display = 'none';
+            }
+        });
+      </script>
+</body>
+</html>
