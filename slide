@@ -80,7 +80,7 @@
 
     <script>
         // 변수 지정
-        var sliderWrapper = document.getElementsByClassName('container'),// 클래스명 container
+        var sliderWrapper = document.getElementsByClassName('container'),// 클래스명 container querySelector로 선언하면 [?]배열처리를 하지 않아도 됨
             sliderContainer = document.getElementsByClassName('slider-container'),//클래스명 slider-container
             slides = document.getElementsByClassName('slide'),//클래스명 slide
             slideCount = slides.length,//슬라이드 개수
