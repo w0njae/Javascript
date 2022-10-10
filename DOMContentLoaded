@@ -1,0 +1,4 @@
+//document가 모두 road되면 js파일을 실행
+document.addEventListener('DOMContentLoaded', function(){
+
+});
